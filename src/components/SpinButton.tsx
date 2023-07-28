@@ -3,14 +3,21 @@ import './SpinButton.css';
 
 const SpinButton: React.FC = () => {
   const [count, setCount] = useState<number>(0);
+  const [message, setMessage] = useState<string>('');
   const [isTooltipVisible, setIsTooltipVisible] = useState<boolean>(false);
 
   const increment = () => {
-    setCount((prevCount) => prevCount + 1);
+    setCount((prevCount) => {
+      setMessage(`성인 승객 추가 ${prevCount + 1}`);
+      return prevCount + 1;
+    });
   };
 
   const decrement = () => {
-    setCount((prevCount) => prevCount - 1);
+    setCount((prevCount) => {
+      setMessage(`성인 승객 감소 ${prevCount - 1}`);
+      return prevCount - 1;
+    });
   };
 
   const toggleTooltip = (event: MouseEvent<HTMLDivElement>) => {
@@ -43,11 +50,15 @@ const SpinButton: React.FC = () => {
           className='spinButtonInput'
           value={count}
           max={3}
-          aria-valuetext={`성인 승객 추가 ${count}`}
-          aria-live='assertive'
+        />
+        <div
+          aria-live='polite'
           aria-relevant='additions'
           aria-atomic='true'
-        />
+          className='visually-hidden'
+        >
+          {message}
+        </div>
         <button
           onClick={increment}
           className='spinButton'
