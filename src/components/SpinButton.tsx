@@ -22,23 +22,37 @@ const SpinButton: React.FC = () => {
       <div>
         <h1>승객 선택</h1>
         <div className='spinButtonLabel'>
-          <label>성인</label>
+          <label htmlFor='myInput'>성인</label>
           <div className='helpIcon' onMouseEnter={toggleTooltip} onMouseLeave={toggleTooltip}>
             ?{isTooltipVisible && <span className='tooltip'>최대 인원수는 3명까지 가능합니다</span>}
           </div>
         </div>
-        <button onClick={decrement} className='spinButton' aria-label='성인 탑승자 한명 줄이기'>
+        <button
+          onClick={decrement}
+          className='spinButton'
+          aria-label='성인 탑승자 한명 줄이기'
+          disabled={count <= 0 ? true : false}
+        >
           -
         </button>
         <input
+          id='myInput'
           type='text'
           role='spinbutton'
           readOnly
           className='spinButtonInput'
           value={count}
           max={3}
+          aria-live='assertive'
+          aria-atomic='true'
+          aria-relevant='additions'
         />
-        <button onClick={increment} className='spinButton' aria-label='성인 탑승자 한명 줄이기'>
+        <button
+          onClick={increment}
+          className='spinButton'
+          aria-label='성인 탑승자 한명 늘리기'
+          disabled={count >= 3 ? true : false}
+        >
           +
         </button>
       </div>
